@@ -70,7 +70,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Do you want to input CSV file? Press Y if yes, or N if no:\n" + "Y/N:");
         String flag = scanner.nextLine();
-        String csvPath;
+        String csvPath =null;
 
         while (!flag.equals("n") && !flag.equals("y")) {
             System.out.println(" Press Y if yes, or N if no:\n" + "Y/N:");
@@ -82,10 +82,7 @@ public class Main {
                 csvPath = scanner.nextLine();
                 break;
             case "n":
-                csvPath = null;
                 break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + flag);
         }
         return csvPath;
     }
