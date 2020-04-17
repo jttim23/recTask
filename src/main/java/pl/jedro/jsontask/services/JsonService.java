@@ -19,7 +19,7 @@ public class JsonService extends AbstractService {
     }
 
     @Override
-    public Map<String, BigDecimal> calculate(File file) throws IOException {
+    public Map<String, BigDecimal> calculate(File file) throws Exception {
         Map<String, BigDecimal> map = new HashMap<>();
         String parsedJob = null;
         BigDecimal parsedSalary;
@@ -47,7 +47,7 @@ public class JsonService extends AbstractService {
                 }
             }
             jParser.close();
-        }
+        } else throw new Exception();
         return map;
     }
 

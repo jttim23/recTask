@@ -10,9 +10,11 @@ public abstract class AbstractService {
     public static void printResult(Map<String, BigDecimal> map) {
         if (Optional.ofNullable(map).isEmpty()) {
             System.out.println("Nothing to be calculated in file");
-        }
-        for (Map.Entry<String, BigDecimal> entry : map.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
+        } else {
+            System.out.println("Printing results:\n");
+            for (Map.Entry<String, BigDecimal> entry : map.entrySet()) {
+                System.out.println(entry.getKey() + " - " + entry.getValue());
+            }
         }
     }
 
@@ -24,7 +26,7 @@ public abstract class AbstractService {
         return new BigDecimal(decToFix.replace(',', '.'));
     }
 
-    public abstract Map<String, BigDecimal> calculate(File file) throws IOException;
+    public abstract Map<String, BigDecimal> calculate(File file) throws Exception;
 
 
 }

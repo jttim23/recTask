@@ -16,19 +16,19 @@ public class CsvService extends AbstractService {
     public CsvService() {
     }
 
-    public Map<String, BigDecimal> calculate(File file) throws IOException {
+    public Map<String, BigDecimal> calculate(File file) throws Exception {
         Map<String, BigDecimal> map = new HashMap<>();
-        try (CSVParser csvParser = new CSVParser(new FileReader(file), CSVFormat.DEFAULT
-                .withFirstRecordAsHeader().withDelimiter(';')
-                .withIgnoreHeaderCase().withFirstRecordAsHeader().withTrim(true)
-        )
-        ) {
+        if (file.length() != 0) {
+            CSVParser csvParser = new CSVParser(new FileReader(file), CSVFormat.DEFAULT
+                    .withFirstRecordAsHeader().withDelimiter(';')
+                    .withIgnoreHeaderCase().withFirstRecordAsHeader().withTrim(true)
+            );
             for (CSVRecord record : csvParser) {
                 String parsedJob = record.get("job");
                 String parsedSalary = record.get("salary");
                 handleMap(AbstractService.deleteDoubleQuotas(parsedJob), AbstractService.deleteDoubleQuotas(parsedSalary), map);
             }
-        }
+        } else throw new Exception();
         return map;
     }
 
