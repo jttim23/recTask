@@ -23,34 +23,32 @@ public class JsonService extends AbstractService {
         Map<String, BigDecimal> map = new HashMap<>();
         String parsedJob = null;
         BigDecimal parsedSalary;
-        if (file.length()!=0) {
+        if (file.length() != 0) {
             JsonFactory factory = new JsonFactory();
             JsonParser jParser = factory.createParser(file);
             while (jParser.nextToken() != JsonToken.END_ARRAY) {
                 Optional<String> fieldName = Optional.ofNullable(jParser.getCurrentName());
-                try {
-                    if (fieldName.isPresent()) {
-                        if ("job".equals(fieldName.get())) {
-                            jParser.nextToken();
-                            parsedJob = jParser.getText();
-                        }
-                        if ("salary".equals(fieldName.get())) {
-                            jParser.nextToken();
-                            try {
-                                parsedSalary = jParser.getDecimalValue();
-                                handleMap(parsedJob, parsedSalary, map);
-                            } catch (JsonParseException e) {
-                                parsedSalary = AbstractService.unifyDecimalFormat(jParser.getText());
-                                handleMap(parsedJob, parsedSalary, map);
-                            }
+
+                if (fieldName.isPresent()) {
+                    if ("job".equals(fieldName.get())) {
+                        jParser.nextToken();
+                        parsedJob = jParser.getText();
+                    }
+                    if ("salary".equals(fieldName.get())) {
+                        jParser.nextToken();
+                        try {
+                            parsedSalary = jParser.getDecimalValue();
+                            handleMap(parsedJob, parsedSalary, map);
+                        } catch (JsonParseException e) {
+                            parsedSalary = AbstractService.unifyDecimalFormat(jParser.getText());
+                            handleMap(parsedJob, parsedSalary, map);
                         }
                     }
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
                 }
             }
             jParser.close();
-        } return map;
+        }
+        return map;
     }
 
     private static void handleMap(String parsedJob, BigDecimal parsedSalary, Map<String, BigDecimal> map) {

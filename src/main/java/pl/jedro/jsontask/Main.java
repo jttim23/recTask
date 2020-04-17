@@ -23,11 +23,11 @@ public class Main {
             System.out.println("Printing Json results:\n");
             AbstractService.printResult(jsonService.calculate(new File(jsonPath)));
             System.out.println("Printing CSV results:\n");
-            AbstractService.printResult(csvService.calculate(new File (csvPath)));
+            AbstractService.printResult(csvService.calculate(new File(csvPath)));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    }
+}
 
