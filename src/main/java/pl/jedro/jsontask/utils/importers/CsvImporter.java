@@ -1,7 +1,6 @@
-package pl.jedro.jsontask.utils;
+package pl.jedro.jsontask.utils.importers;
 
 import com.fasterxml.jackson.databind.MappingIterator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvParser;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
@@ -9,12 +8,11 @@ import pl.jedro.jsontask.model.Employee;
 import pl.jedro.jsontask.model.EmployeeWrapper;
 
 import java.io.File;
+import java.io.IOException;
 
-public class Importer {
-    public Importer() {
-    }
-
-    public EmployeeWrapper getPeopleFromCSVFile(File file) throws Exception {
+public class CsvImporter implements Importer {
+    @Override
+    public EmployeeWrapper getEmployeesFromFile(File file) throws RuntimeException, IOException {
         EmployeeWrapper employees = new EmployeeWrapper();
         if (file.length() != 0) {
             CsvMapper mapper = new CsvMapper();
@@ -25,20 +23,8 @@ public class Importer {
             employees.setEmployees(it.readAll());
             return employees;
         } else {
-            throw new Exception();
+            throw new RuntimeException();
         }
 
-    }
-
-    public EmployeeWrapper getPeopleFromJSONFile(File file) throws Exception {
-        EmployeeWrapper employees;
-
-        if (file.length() != 0) {
-            ObjectMapper mapper = new ObjectMapper();
-            employees = mapper.readValue(file, EmployeeWrapper.class);
-        } else {
-            throw new Exception();
-        }
-        return employees;
     }
 }
