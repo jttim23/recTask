@@ -1,6 +1,6 @@
 id;name;surname;job;salary
-      1;      "Mark";      "Green";      "Teacher";      ""
+      1;      "Mark";      "Green";      "Teacher";      "123.123"
       2;      "Oscar";      "Mustache";      "Janitor";      "13460.45"
-      3;      "Adalbert";      "Kidney";      "Priest";      ""
+      3;      "Adalbert";      "Kidney";      "Priest";      "123,12"
       4;      "Christopher";      "Głuś";      "Teacher";      "2700,10"
       5;      "Michael";      "Spear";      "Janitor";      "13460,45"

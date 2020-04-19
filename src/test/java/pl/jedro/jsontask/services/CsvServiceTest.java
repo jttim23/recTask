@@ -61,7 +61,6 @@ class CsvServiceTest {
         //when
         Map<String, BigDecimal> map = service.calculate(input);
         //then
-        System.out.println(map.toString());
         assertEquals(2, map.size());
         assertEquals(new BigDecimal("2700"), map.get("Teacher"));
         assertEquals(new BigDecimal("13460.45"), map.get("Janitor"));

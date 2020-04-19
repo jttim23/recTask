@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class JsonServiceTest {
     Path resourceDirectory = Paths.get("src", "test", "resources");
@@ -62,8 +61,8 @@ class JsonServiceTest {
         //then
         assertEquals(3, map.size());
         System.out.println(map.toString());
-        assertEquals(new BigDecimal("200.123"), map.get("2"));
-        assertEquals(new BigDecimal("0.00"), map.get("3"));
+        assertEquals(new BigDecimal("23"), map.get("4"));
+        assertEquals(new BigDecimal("100.123"), map.get("5"));
 
     }
 }

@@ -1,39 +1,17 @@
 package pl.jedro.jsontask.services;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Matchers.startsWith;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 class AbstractServiceTest {
 
-    @Test
-    void printEmptyMapResultsTest() {
-        PrintStream out = mock(PrintStream.class);
-        System.setOut(out);
-
-        AbstractService.printResult(new HashMap<>());
-        verify(out).println(startsWith("Nothing to be calculated in file"));
-    }
-
-    @Test
-    void printMapResultsTest() {
-        Map<String, BigDecimal> map = new HashMap<>();
-        map.put("Test", new BigDecimal("12.12"));
-        PrintStream out = mock(PrintStream.class);
-        System.setOut(out);
-
-        AbstractService.printResult(map);
-        verify(out).println(startsWith("Printing results:"));
-    }
 
     @Test
     void deleteQuotasTest() {
@@ -45,6 +23,27 @@ class AbstractServiceTest {
     void unifyDecimalTest() {
         String wrongDec = "123,12";
         assertEquals(new BigDecimal("123.12"), AbstractService.unifyDecimalFormat(wrongDec));
+    }
+
+    @Test
+    void unifyDecimalThrowsFormatException() {
+        String strToUnify = "123.12asd";
+
+        Assertions.assertThrows(NumberFormatException.class, () -> {
+            AbstractService.unifyDecimalFormat(strToUnify);
+        });
+        Assertions.assertThrows(NumberFormatException.class, () -> {
+            AbstractService.unifyDecimalFormat("");
+        });
+    }
+
+    @Test
+    void handleMapThrowsExceptionWhenEmptyJob() {
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            AbstractService.handleMapAdding("", new BigDecimal("12"), new HashMap<String, BigDecimal>());
+        });
+
     }
 
     @Test

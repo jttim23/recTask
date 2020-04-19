@@ -4,36 +4,36 @@
       "id": 1,
       "name": "Mark",
       "surname": "Green",
-      "job": "4",
-      "salary": "100,asda"
-    },
-	{
-      "id": 1,
-      "name": "Mark",
-      "surname": "Green",
-      "job": "2",
-      "salary": " 100,00 "
+      "job": "1",
+      "salary": "100"
     },
 	{
       "id": 1,
       "name": "Mark",
       "surname": "Green",
       "job": "",
-      "salary": "100.0"
+      "salary": " 100,00 "
+    },
+	{
+      "id": 1,
+      "name": "Mark",
+      "surname": "Green",
+      "salary": "100.0sfsfsfse",
+      "job": "3"
     },
     {
       "id": 2,
       "name": "Oscar",
       "surname": "Mustache",
-      "job": " 2 ",
-      "salary": " 100,123 " 
+      "salary": " 100,123 ",
+      "job": " 5 "
     },
     {
       "id": 3,
       "name": "Adalbert",
       "surname": "Kidney",
-      "job": "3",
-      "salary": ""
+      "salary": "23",
+      "job": " 4 "
     }
   ]
 }

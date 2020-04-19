@@ -11,8 +11,9 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class JsonService extends AbstractService {
-    Map<String,String> errors = new HashMap<>();
-    public Map<String,String> getErrors(){
+    Map<String, String> errors = new HashMap<>();
+
+    public Map<String, String> getErrors() {
         return errors;
     }
 
@@ -23,32 +24,37 @@ public class JsonService extends AbstractService {
     @Override
     public Map<String, BigDecimal> calculate(File file) throws Exception {
         Map<String, BigDecimal> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        String parsedJob = "";
-        String parsedSalary;
+
         if (file.length() != 0) {
             JsonFactory factory = new JsonFactory();
             JsonParser jParser = factory.createParser(file);
-
             while (jParser.nextToken() != JsonToken.END_ARRAY) {
-                String fieldName = jParser.getCurrentName();
-                BigDecimal unifiedSalary;
-                if ("job".equals(fieldName)) {
-                    jParser.nextToken();
-                    parsedJob = jParser.getText().trim();
-                }
-                if ("salary".equals(fieldName)) {
-                    jParser.nextToken();
-                    parsedSalary = jParser.getText().trim();
+                String parsedJob = "";
+                String parsedSalary = "";
+                while (jParser.nextToken() != JsonToken.END_OBJECT) {
+                    String fieldName = jParser.getCurrentName();
+                    BigDecimal unifiedSalary;
+                    if ("job".equals(fieldName)) {
+                        jParser.nextToken();
+                        parsedJob = jParser.getText().trim();
+
+                    }
+                    if ("salary".equals(fieldName)) {
+                        jParser.nextToken();
+                        parsedSalary = jParser.getText().trim();
+                    }
+
                     try {
-                        unifiedSalary = unifyDecimalFormat(deleteDoubleQuotas(parsedSalary));
+                        unifiedSalary = unifyDecimalFormat(parsedSalary);
                     } catch (NumberFormatException e) {
-                        errors.put(e.toString(),jParser.getCurrentName());
+                        errors.put(e.toString(), jParser.getCurrentName());
                         continue;
                     }
                     try {
-                        handleMapAdding(deleteDoubleQuotas(parsedJob), unifiedSalary, map);
-                    } catch (RuntimeException e){
-                        errors.put(e.toString(),"job");
+                        handleMapAdding(parsedJob, unifiedSalary, map);
+                    } catch (RuntimeException e) {
+                        errors.put(e.toString(), "job");
+
                     }
                 }
             }

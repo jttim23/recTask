@@ -7,13 +7,17 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.File;
 import java.io.FileReader;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class CsvService extends AbstractService {
-    Map<String,Long> errors = new HashMap<>();
+    Map<String, Long> errors = new HashMap<>();
+
     public CsvService() {
     }
-    public Map<String,Long> getErrors(){
+
+    public Map<String, Long> getErrors() {
         return errors;
     }
 
@@ -30,18 +34,18 @@ public class CsvService extends AbstractService {
                 String parsedSalary = record.get("salary").trim();
                 BigDecimal unifiedSalary;
 
-               try {
+                try {
                     unifiedSalary = unifyDecimalFormat(deleteDoubleQuotas(parsedSalary));
-               } catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
 
-                   errors.put(e.toString(),record.getRecordNumber());
+                    errors.put(e.toString(), record.getRecordNumber());
                     continue;
-               }
-               try {
-                handleMapAdding(deleteDoubleQuotas(parsedJob), unifiedSalary, map);
-            } catch (RuntimeException e){
-                   errors.put(e.toString(),record.getRecordNumber());
-               }
+                }
+                try {
+                    handleMapAdding(deleteDoubleQuotas(parsedJob), unifiedSalary, map);
+                } catch (RuntimeException e) {
+                    errors.put(e.toString(), record.getRecordNumber());
+                }
             }
         } else throw new Exception();
         return map;
