@@ -5,12 +5,14 @@ import pl.jedro.jsontask.services.CsvService;
 import pl.jedro.jsontask.services.JsonService;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.*;
 
 public class Terminal {
 
     public Terminal() {
     }
+
     public void run() {
         List<String> paths = getPathsFromConsole();
         JsonService jsonService = new JsonService();
@@ -19,6 +21,12 @@ public class Terminal {
             try {
                 System.out.println("JSON Service:\n");
                 AbstractService.printResult(jsonService.calculate(new File(path)));
+                Map<String,String> errors = jsonService.getErrors();
+                if (!errors.isEmpty()){
+                    System.out.println("During runtime following errors were found:\n" );
+                    for (Map.Entry<String, String> entry : errors.entrySet()) {
+                        System.out.println( entry.getKey() + " - near : " + entry.getValue());
+                    }}
             } catch (Exception e) {
                 System.out.println("Could not find a JSON file.");
             }
@@ -28,18 +36,23 @@ public class Terminal {
             try {
                 System.out.println("CSV Service:\n");
                 AbstractService.printResult(csvService.calculate(new File(path)));
-
+                Map<String,Long> errors = csvService.getErrors();
+                if (!errors.isEmpty()){
+                    System.out.println("During runtime following errors were found:\n" );
+                for (Map.Entry<String, Long> entry : errors.entrySet()) {
+                    System.out.println( entry.getKey() + " - on record number: " + entry.getValue());
+                }}
             } catch (Exception e) {
-
                 System.out.println("Could not find a CSV file.");
             }
             return "";
         });
     }
 
-    private  List<String> getPathsFromConsole() {
+    private List<String> getPathsFromConsole() {
         List<String> paths = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
+
         System.out.println("Do you want to input JSON file? Press Y if yes, or N if no:\n" + "Y/N:");
         String flag = scanner.nextLine();
         String jsonPath;
@@ -61,14 +74,14 @@ public class Terminal {
                 paths = Arrays.asList("", csvPath);
                 break;
         }
-    return paths;
+        return paths;
     }
 
-    private  String getCSVPathFromConsole() {
+    private String getCSVPathFromConsole() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Do you want to input CSV file? Press Y if yes, or N if no:\n" + "Y/N:");
         String flag = scanner.nextLine();
-        String csvPath= "";
+        String csvPath = "";
 
         while (!flag.equals("n") && !flag.equals("y")) {
             System.out.println(" Press Y if yes, or N if no:\n" + "Y/N:");

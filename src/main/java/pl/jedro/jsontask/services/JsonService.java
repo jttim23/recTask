@@ -1,16 +1,20 @@
 package pl.jedro.jsontask.services;
 
 import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class JsonService extends AbstractService {
+    Map<String,String> errors = new HashMap<>();
+    public Map<String,String> getErrors(){
+        return errors;
+    }
 
 
     public JsonService() {
@@ -19,25 +23,32 @@ public class JsonService extends AbstractService {
     @Override
     public Map<String, BigDecimal> calculate(File file) throws Exception {
         Map<String, BigDecimal> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        String parsedJob ="";
-        BigDecimal parsedSalary;
+        String parsedJob = "";
+        String parsedSalary;
         if (file.length() != 0) {
             JsonFactory factory = new JsonFactory();
             JsonParser jParser = factory.createParser(file);
+
             while (jParser.nextToken() != JsonToken.END_ARRAY) {
                 String fieldName = jParser.getCurrentName();
+                BigDecimal unifiedSalary;
                 if ("job".equals(fieldName)) {
                     jParser.nextToken();
-                    parsedJob = jParser.getText();
+                    parsedJob = jParser.getText().trim();
                 }
                 if ("salary".equals(fieldName)) {
                     jParser.nextToken();
+                    parsedSalary = jParser.getText().trim();
                     try {
-                        parsedSalary = jParser.getDecimalValue();
-                        handleMap(parsedJob, parsedSalary, map);
-                    } catch (JsonParseException e) {
-                        parsedSalary = unifyDecimalFormat(jParser.getText());
-                        handleMap(parsedJob, parsedSalary, map);
+                        unifiedSalary = unifyDecimalFormat(deleteDoubleQuotas(parsedSalary));
+                    } catch (NumberFormatException e) {
+                        errors.put(e.toString(),jParser.getCurrentName());
+                        continue;
+                    }
+                    try {
+                        handleMapAdding(deleteDoubleQuotas(parsedJob), unifiedSalary, map);
+                    } catch (RuntimeException e){
+                        errors.put(e.toString(),"job");
                     }
                 }
             }

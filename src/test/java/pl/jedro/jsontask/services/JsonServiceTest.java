@@ -17,11 +17,10 @@ class JsonServiceTest {
     String basePath = resourceDirectory.toFile().getAbsolutePath();
 
 
-
     @Test
     void fileCalculateTest() throws Exception {
         //given
-        File input = new File(basePath+  "\\employees.json");
+        File input = new File(basePath + "\\employees.json");
         JsonService service = new JsonService();
         //when
         Map<String, BigDecimal> map = service.calculate(input);
@@ -29,8 +28,9 @@ class JsonServiceTest {
         assertEquals(3, map.size());
 
     }
+
     @Test
-    void throwsExceptionWhenFileNotFound(){
+    void throwsExceptionWhenFileNotFound() {
         //given
         File input = new File("wrongPath");
         JsonService service = new JsonService();
@@ -40,27 +40,30 @@ class JsonServiceTest {
         });
 
     }
+
     @Test
-    void throwsExceptionWhenFileEmpty(){
+    void throwsExceptionWhenFileEmpty() {
         //given
-        File input = new File(basePath+ "\\employeesEmpty.json");
+        File input = new File(basePath + "\\employeesEmpty.json");
         JsonService service = new JsonService();
         //then
         Assertions.assertThrows(Exception.class, () -> {
             service.calculate(input);
         });
     }
+
     @Test
     void corruptedFileCalculationTest() throws Exception {
         //given
-        File input = new File(basePath+ "\\employeesCorrupted.json");
+        File input = new File(basePath + "\\employeesCorrupted.json");
         JsonService service = new JsonService();
         //when
-        Map<String, BigDecimal> map =  service.calculate(input);
+        Map<String, BigDecimal> map = service.calculate(input);
         //then
-        assertEquals(2,map.size());
-        assertEquals(new BigDecimal("100.123"),map.get("2"));
-        assertEquals(new BigDecimal("0.00"),map.get("3"));
+        assertEquals(3, map.size());
+        System.out.println(map.toString());
+        assertEquals(new BigDecimal("200.123"), map.get("2"));
+        assertEquals(new BigDecimal("0.00"), map.get("3"));
 
     }
 }
