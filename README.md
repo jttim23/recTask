@@ -1,7 +1,17 @@
 # Read Me First
-This is app build for recruitment
+This is app build for recruitment 
+<p>It runs console to ask for input JSON and/or CSV 
+File and calculate salaries for each job.
+<p>If job or salary field contains errors, whole JSON 
+Object or CSV row will not be processed.
+<p>If salary is saved with ',' as delimiter, delimiter will be converted to '.' 
+to unify decimal format.
+<p>Job letter case is irrelevant 
+eg. ('Teacher' and 'teacher' will be processed as the same job) </p> 
+
+
 # Setup
-git clone https://github.com/jttim23/recTask.git
-cd sky-flight-system
-mvn package
-java -jar target/*jar-with-dependencies.jar
+##### git clone https://github.com/jttim23/recTask.git
+#####cd sky-flight-system
+#####mvn package
+#####java -jar target/*jar-with-dependencies.jar
