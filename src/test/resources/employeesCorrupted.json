@@ -1,0 +1,39 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "Mark",
+      "surname": "Green",
+      "job": "1",
+      "salary": "100"
+    },
+	{
+      "id": 1,
+      "name": "Mark",
+      "surname": "Green",
+      "job": "",
+      "salary": " 100,00 "
+    },
+	{
+      "id": 1,
+      "name": "Mark",
+      "surname": "Green",
+      "salary": "100.0sfsfsfse",
+      "job": "3"
+    },
+    {
+      "id": 2,
+      "name": "Oscar",
+      "surname": "Mustache",
+      "salary": " 100,123 ",
+      "job": " 5 "
+    },
+    {
+      "id": 3,
+      "name": "Adalbert",
+      "surname": "Kidney",
+      "salary": "23",
+      "job": " 4 "
+    }
+  ]
+}
