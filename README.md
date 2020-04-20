@@ -11,15 +11,15 @@ eg. ('Teacher' and 'teacher' will be processed as the same job) </p>
 
 
 # Setup
-1. Please run git command in your destination folder:
+<p>1. Please run git command in your destination folder:
 
  ```git clone https://github.com/jttim23/recTask.git```
-2. Change direction:
+<p>2. Change direction:
 
 ```cd recTask```
-3. Run maven command to create executable jar file.
+<p>3. Run maven command to create executable jar file.
 
 ```mvn package```
-4. Run fat-jar using command:
+<p>4. Run fat-jar using command:
 
 ```java -jar target/recTask.jar```
