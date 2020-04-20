@@ -47,8 +47,9 @@ class BaseServiceTest {
         assertEquals(3, result.size());
         assertEquals(new BigDecimal("23"), result.get("4"));
         assertEquals(new BigDecimal("100.123"), result.get("5"));
-        assertEquals(service.getErrorList().size(),2);
+        assertEquals(service.getErrorList().size(), 2);
     }
+
     @Test
     void corruptedCSVCalculationTest() throws Exception {
         //given
@@ -61,6 +62,6 @@ class BaseServiceTest {
         assertEquals(2, result.size());
         assertEquals(new BigDecimal("13460.45"), result.get("Janitor"));
         assertEquals(new BigDecimal("2700"), result.get("Teacher"));
-        assertEquals(service.getErrorList().size(),3);
+        assertEquals(service.getErrorList().size(), 3);
     }
 }

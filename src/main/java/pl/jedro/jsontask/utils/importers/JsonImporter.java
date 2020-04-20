@@ -6,23 +6,22 @@ import pl.jedro.jsontask.model.EmployeeWrapper;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Optional;
 
 public class JsonImporter implements Importer {
-    private String fileType = "JSON";
+    private static final String FILE_TYPE = "JSON";
 
     public String getFileType() {
-        return fileType;
+        return FILE_TYPE;
     }
 
     @Override
     public EmployeeWrapper getEmployeesFromFile(File file) throws IOException {
-        EmployeeWrapper employees;
-        if (file.length() == 0) {
+
+        if (Optional.ofNullable(file).isEmpty()) {
             throw new FileNotFoundException();
-        } else {
-            ObjectMapper mapper = new ObjectMapper();
-            employees = mapper.readValue(file, EmployeeWrapper.class);
-            return employees;
         }
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(file, EmployeeWrapper.class);
     }
 }
