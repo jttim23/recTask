@@ -14,7 +14,7 @@ public class Printer {
             System.out.println("Printing results:\n");
             results.forEach((k, v) -> System.out.println(k + " - " + v));
             if (!errors.isEmpty()) {
-                System.out.println("During runtime following errors were found and calculations were omitted:\n");
+                System.out.println("During runtime errors were found and calculations were omitted in following records:\n");
                 errors.forEach(System.out::println);
             }}
         }
