@@ -13,6 +13,10 @@ public class BaseService {
     private Map<String, BigDecimal> results = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private List<String> errors = new ArrayList<>();
 
+    private static BigDecimal unifyDecimalFormat(String decToFix) throws NumberFormatException {
+        return new BigDecimal(decToFix.replace(',', '.'));
+    }
+
     public Map<String, BigDecimal> calculate(EmployeeWrapper list) {
         //to clear error list for every method call
         errors = new ArrayList<>();
@@ -24,10 +28,6 @@ public class BaseService {
             }
         });
         return results;
-    }
-
-    private static BigDecimal unifyDecimalFormat(String decToFix) throws NumberFormatException {
-        return new BigDecimal(decToFix.replace(',', '.'));
     }
 
     private void sumUp(Employee employee, Map<String, BigDecimal> map) throws RuntimeException {

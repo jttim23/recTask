@@ -13,16 +13,15 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class CsvImporter implements Importer {
-    private String fileType = "CSV";
+    private static final String FILE_TYPE = "CSV";
 
     public String getFileType() {
-        return fileType;
+        return FILE_TYPE;
     }
 
     @Override
     public EmployeeWrapper getEmployeesFromFile(File file) throws IOException {
-        EmployeeWrapper employees = new EmployeeWrapper();
-        if (file.length() == 0) {
+        if (Optional.ofNullable(file).isEmpty()) {
             throw new FileNotFoundException();
         } else {
             CsvMapper mapper = new CsvMapper();
@@ -30,8 +29,7 @@ public class CsvImporter implements Importer {
             CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader().withColumnSeparator(';');
             MappingIterator<Employee> it = mapper.readerFor(Employee.class).with(bootstrapSchema)
                     .readValues(file);
-            employees.setEmployees(it.readAll());
-            return employees;
+            return new EmployeeWrapper(it.readAll());
         }
 
     }

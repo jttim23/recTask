@@ -23,12 +23,11 @@ public class Service extends BaseService {
         String path = terminal.getPathFromConsole(fileFormat);
         if (path.length() != 0) {
             try {
-               calculate(importer.getEmployeesFromFile(new File(path)));
-            } catch (FileNotFoundException e ) {
-                System.out.println("Could not find a " + fileFormat + " file.");
-            }
-            catch (IOException e){
-                System.out.println("Could not read a " + fileFormat + " file.");
+                calculate(importer.getEmployeesFromFile(new File(path)));
+            } catch (FileNotFoundException e) {
+                System.out.println("Could not find a " + fileFormat + " file!!!\n");
+            } catch (IOException e) {
+                System.out.println("Could not read a " + fileFormat + " file or empty!!!\n");
             }
         }
     }
