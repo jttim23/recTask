@@ -4,9 +4,9 @@ import pl.jedro.jsontask.utils.Terminal;
 import pl.jedro.jsontask.utils.importers.Importer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Map;
+
 
 public class Service extends BaseService {
     private Importer importer;
@@ -23,9 +23,12 @@ public class Service extends BaseService {
         String path = terminal.getPathFromConsole(fileFormat);
         if (path.length() != 0) {
             try {
-                Map<String, BigDecimal> results = calculate(importer.getEmployeesFromFile(new File(path)));
-            } catch (RuntimeException | IOException e) {
+               calculate(importer.getEmployeesFromFile(new File(path)));
+            } catch (FileNotFoundException e ) {
                 System.out.println("Could not find a " + fileFormat + " file.");
+            }
+            catch (IOException e){
+                System.out.println("Could not read a " + fileFormat + " file.");
             }
         }
     }

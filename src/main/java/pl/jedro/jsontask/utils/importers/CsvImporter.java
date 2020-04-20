@@ -8,7 +8,9 @@ import pl.jedro.jsontask.model.Employee;
 import pl.jedro.jsontask.model.EmployeeWrapper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Optional;
 
 public class CsvImporter implements Importer {
     private String fileType = "CSV";
@@ -18,10 +20,10 @@ public class CsvImporter implements Importer {
     }
 
     @Override
-    public EmployeeWrapper getEmployeesFromFile(File file) throws RuntimeException, IOException {
+    public EmployeeWrapper getEmployeesFromFile(File file) throws IOException {
         EmployeeWrapper employees = new EmployeeWrapper();
         if (file.length() == 0) {
-            throw new RuntimeException();
+            throw new FileNotFoundException();
         } else {
             CsvMapper mapper = new CsvMapper();
             mapper.enable(CsvParser.Feature.TRIM_SPACES);
@@ -31,5 +33,6 @@ public class CsvImporter implements Importer {
             employees.setEmployees(it.readAll());
             return employees;
         }
+
     }
 }

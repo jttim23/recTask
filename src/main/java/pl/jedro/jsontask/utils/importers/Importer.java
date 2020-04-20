@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 
 public interface Importer {
-    public EmployeeWrapper getEmployeesFromFile(File file) throws RuntimeException, IOException;
-
+    public EmployeeWrapper getEmployeesFromFile(File file) throws IOException;
     public String getFileType();
 }

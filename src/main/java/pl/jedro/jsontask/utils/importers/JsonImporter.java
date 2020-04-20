@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import pl.jedro.jsontask.model.EmployeeWrapper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class JsonImporter implements Importer {
@@ -14,10 +15,10 @@ public class JsonImporter implements Importer {
     }
 
     @Override
-    public EmployeeWrapper getEmployeesFromFile(File file) throws RuntimeException, IOException {
+    public EmployeeWrapper getEmployeesFromFile(File file) throws IOException {
         EmployeeWrapper employees;
         if (file.length() == 0) {
-            throw new RuntimeException();
+            throw new FileNotFoundException();
         } else {
             ObjectMapper mapper = new ObjectMapper();
             employees = mapper.readValue(file, EmployeeWrapper.class);

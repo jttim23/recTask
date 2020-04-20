@@ -11,7 +11,15 @@ eg. ('Teacher' and 'teacher' will be processed as the same job) </p>
 
 
 # Setup
+<p>1. Please run git command in your destination folder:
+
 ##### git clone https://github.com/jttim23/recTask.git
-#####cd sky-flight-system
+<p>2. Change direction:
+
+#####cd recTask
+<p>3. Run maven command to create executable jar file.
+
 #####mvn package
-#####java -jar target/*jar-with-dependencies.jar
+<p>4. Run fat-jar using command:
+
+#####java -jar target/recTask.jar

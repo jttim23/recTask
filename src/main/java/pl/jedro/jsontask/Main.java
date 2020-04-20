@@ -10,7 +10,7 @@ import pl.jedro.jsontask.utils.importers.JsonImporter;
 
 public class Main {
     public static void main(String[] args) {
-       Service jsonService = new Service(new JsonImporter(), new Terminal());
+        Service jsonService = new Service(new JsonImporter(), new Terminal());
         Service csvService = new Service(new CsvImporter(), new Terminal());
         jsonService.run();
         csvService.run();

@@ -1,7 +1,9 @@
-package pl.jedro.jsontask.services;
+package pl.jedro.jsontask;
 
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.Test;
+import pl.jedro.jsontask.services.BaseService;
+import pl.jedro.jsontask.utils.importers.CsvImporter;
 import pl.jedro.jsontask.utils.importers.Importer;
 import pl.jedro.jsontask.utils.importers.JsonImporter;
 
@@ -13,7 +15,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ServiceTest {
+class BaseServiceTest {
 
     Path resourceDirectory = Paths.get("src", "test", "resources");
     String basePath = resourceDirectory.toFile().getAbsolutePath();
@@ -32,33 +34,9 @@ class ServiceTest {
 
     }
 
-    @Test
-    void throwsExceptionWhenFileNotFound() {
-        //given
-        Importer importer = new JsonImporter();
-        File input = new File("wrongPath");
-        BaseService service = new BaseService();
-        //then
-        Assertions.assertThrows(Exception.class, () -> {
-            service.calculate(importer.getEmployeesFromFile(input));
-        });
-
-    }
 
     @Test
-    void throwsExceptionWhenFileEmpty() {
-        //given
-        Importer importer = new JsonImporter();
-        File input = new File(basePath + "\\employeesEmpty.json");
-        BaseService service = new BaseService();
-        //then
-        Assertions.assertThrows(Exception.class, () -> {
-            service.calculate(importer.getEmployeesFromFile(input));
-        });
-    }
-
-    @Test
-    void corruptedFileCalculationTest() throws Exception {
+    void corruptedJsonCalculationTest() throws Exception {
         //given
         Importer importer = new JsonImporter();
         File input = new File(basePath + "\\employeesCorrupted.json");
@@ -67,9 +45,22 @@ class ServiceTest {
         Map<String, BigDecimal> result = service.calculate(importer.getEmployeesFromFile(input));
         //then
         assertEquals(3, result.size());
-        System.out.println(result.toString());
         assertEquals(new BigDecimal("23"), result.get("4"));
         assertEquals(new BigDecimal("100.123"), result.get("5"));
-
+        assertEquals(service.getErrorList().size(),2);
+    }
+    @Test
+    void corruptedCSVCalculationTest() throws Exception {
+        //given
+        Importer importer = new CsvImporter();
+        File input = new File(basePath + "\\employeesCorrupted.csv");
+        BaseService service = new BaseService();
+        //when
+        Map<String, BigDecimal> result = service.calculate(importer.getEmployeesFromFile(input));
+        //then
+        assertEquals(2, result.size());
+        assertEquals(new BigDecimal("13460.45"), result.get("Janitor"));
+        assertEquals(new BigDecimal("2700"), result.get("Teacher"));
+        assertEquals(service.getErrorList().size(),3);
     }
 }
