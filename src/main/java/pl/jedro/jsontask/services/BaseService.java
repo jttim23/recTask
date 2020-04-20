@@ -10,15 +10,9 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class BaseService {
-    Map<String, BigDecimal> results = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private Map<String, BigDecimal> results = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     private List<String> errors = new ArrayList<>();
 
-    public List<String> getErrorList() {
-        return errors;
-    }
-    public Map<String, BigDecimal> getResults(){
-        return results;
-    }
     public Map<String, BigDecimal> calculate(EmployeeWrapper list) {
         //to clear error list for every method call
         errors = new ArrayList<>();
@@ -29,13 +23,6 @@ public class BaseService {
                 errors.add(employee.toString());
             }
         });
-//        for (Employee employee : list.getEmployees()) {
-//            try {
-//                sumUp(employee, results);
-//            } catch (RuntimeException e) {
-//                errors.add(employee.toString());
-//            }
-//        }
         return results;
     }
 
@@ -55,6 +42,14 @@ public class BaseService {
         } else {
             throw new RuntimeException();
         }
+    }
+
+    public List<String> getErrorList() {
+        return errors;
+    }
+
+    public Map<String, BigDecimal> getResults() {
+        return results;
     }
 
 

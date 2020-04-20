@@ -26,9 +26,9 @@ class ServiceTest {
         File input = new File(basePath + "\\employees.json");
         BaseService service = new BaseService();
         //when
-        Map<String, BigDecimal> map = service.calculate(importer.getEmployeesFromFile(input));
+        Map<String, BigDecimal> result = service.calculate(importer.getEmployeesFromFile(input));
         //then
-        assertEquals(3, map.size());
+        assertEquals(3, result.size());
 
     }
 
@@ -64,12 +64,12 @@ class ServiceTest {
         File input = new File(basePath + "\\employeesCorrupted.json");
         BaseService service = new BaseService();
         //when
-        Map<String, BigDecimal> map = service.calculate(importer.getEmployeesFromFile(input));
+        Map<String, BigDecimal> result = service.calculate(importer.getEmployeesFromFile(input));
         //then
-        assertEquals(3, map.size());
-        System.out.println(map.toString());
-        assertEquals(new BigDecimal("23"), map.get("4"));
-        assertEquals(new BigDecimal("100.123"), map.get("5"));
+        assertEquals(3, result.size());
+        System.out.println(result.toString());
+        assertEquals(new BigDecimal("23"), result.get("4"));
+        assertEquals(new BigDecimal("100.123"), result.get("5"));
 
     }
 }

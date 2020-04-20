@@ -2,22 +2,26 @@ package pl.jedro.jsontask.utils.importers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pl.jedro.jsontask.model.EmployeeWrapper;
-import pl.jedro.jsontask.utils.importers.Importer;
 
 import java.io.File;
 import java.io.IOException;
 
 public class JsonImporter implements Importer {
+    private String fileType = "JSON";
+
+    public String getFileType() {
+        return fileType;
+    }
+
     @Override
     public EmployeeWrapper getEmployeesFromFile(File file) throws RuntimeException, IOException {
         EmployeeWrapper employees;
-
-        if (file.length() != 0) {
+        if (file.length() == 0) {
+            throw new RuntimeException();
+        } else {
             ObjectMapper mapper = new ObjectMapper();
             employees = mapper.readValue(file, EmployeeWrapper.class);
-        } else {
-            throw new RuntimeException();
+            return employees;
         }
-        return employees;
     }
 }

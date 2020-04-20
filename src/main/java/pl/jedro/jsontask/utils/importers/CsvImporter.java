@@ -11,10 +11,18 @@ import java.io.File;
 import java.io.IOException;
 
 public class CsvImporter implements Importer {
+    private String fileType = "CSV";
+
+    public String getFileType() {
+        return fileType;
+    }
+
     @Override
     public EmployeeWrapper getEmployeesFromFile(File file) throws RuntimeException, IOException {
         EmployeeWrapper employees = new EmployeeWrapper();
-        if (file.length() != 0) {
+        if (file.length() == 0) {
+            throw new RuntimeException();
+        } else {
             CsvMapper mapper = new CsvMapper();
             mapper.enable(CsvParser.Feature.TRIM_SPACES);
             CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader().withColumnSeparator(';');
@@ -22,9 +30,6 @@ public class CsvImporter implements Importer {
                     .readValues(file);
             employees.setEmployees(it.readAll());
             return employees;
-        } else {
-            throw new RuntimeException();
         }
-
     }
 }

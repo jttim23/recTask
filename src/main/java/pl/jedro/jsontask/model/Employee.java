@@ -1,5 +1,8 @@
 package pl.jedro.jsontask.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Employee {
     private Long id;
     private String name;
@@ -7,27 +10,16 @@ public class Employee {
     private String job;
     private String salary;
 
-    public Employee() {
-    }
 
-    public Long getId() {
-        return id;
+    public Employee() {
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
     }
 
     public void setSurname(String surname) {

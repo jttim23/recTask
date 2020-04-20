@@ -7,8 +7,10 @@ import java.util.Map;
 public class Printer {
 
 
-    public void print(List<String> errors, Map<String, BigDecimal> map) {
-        printResult(map);
+    public void print(Map<String, BigDecimal> results, List<String> errors, String serviceType) {
+        System.out.println(serviceType + "Service:\n");
+        printResult(results);
+
         if (!errors.isEmpty()) {
             System.out.println("During runtime following errors were found and calculations were omitted:\n");
             errors.forEach(System.out::println);
@@ -16,12 +18,12 @@ public class Printer {
     }
 
 
-    public static void printResult(Map<String, BigDecimal> map) {
-        if (map.isEmpty()) {
-            System.out.println("Nothing to be calculated in file");
+    public static void printResult(Map<String, BigDecimal> results) {
+        if (results.isEmpty()) {
+            System.out.println("Nothing to be calculated:");
         } else {
             System.out.println("Printing results:\n");
-            map.forEach((k, v) -> System.out.println(k + " - " + v));
+            results.forEach((k, v) -> System.out.println(k + " - " + v));
         }
     }
 
